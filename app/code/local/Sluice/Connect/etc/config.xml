@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <sluice_connect>
+            <version>0.1.0</version>
+        </sluice_connect>
+    </modules>
+    
+    <global>
+        <models>
+            <sluice_connect>
+                <class>Sluice_Connect_Model</class>
+            </sluice_connect>
+        </models>
+
+        <helpers>
+            <sluice_connect>
+                <class>Sluice_Connect_Helper</class>
+            </sluice_connect>
+        </helpers>
+        
+        <events>
+             <admin_system_config_changed_section_sluice_section>
+                 <observers>
+                    <config_change_ob>
+                        <type>singleton</type>
+                        <class>Sluice_Connect_Model_Observer</class>
+                        <method>hookSavePluginConfig</method>
+                    </config_change_ob>
+                </observers>
+            </admin_system_config_changed_section_sluice_section>
+        </events>
+    </global>
+    
+    <frontend>
+        <events>
+            <!-- Hooking to our own event "checkout_cart_product_add_after" -->
+            <checkout_cart_product_add_after>
+                <observers>
+                    <Sluice_Connect_Model_Observer>
+                        <type>singleton</type>
+                        <class>Sluice_Connect_Model_Observer</class>
+                        <method>hookToAddToCart</method>
+                    </Sluice_Connect_Model_Observer>
+                </observers>
+            </checkout_cart_product_add_after>
+            
+            <admin_system_config_changed_section_sluice_section>
+                 <observers>
+                    <config_change_ob>
+                        <type>singleton</type>
+                        <class>Sluice_Connect_Model_Observer</class>
+                        <method>hookSavePluginConfig</method>
+                    </config_change_ob>
+                </observers>
+            </admin_system_config_changed_section_sluice_section>
+        </events>
+    </frontend>
+    
+    <adminhtml>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+             </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sluice_section translate="title" module="sluice_connect">
+                                        <title>My Section</title>
+                                    </sluice_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</adminhtml>
+</config>

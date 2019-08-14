@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<config>
+    <tabs>
+        <sluice_tab module="sluice_connect" translate="label">
+            <label>Sluice Connect</label>
+            <sort_order>100</sort_order>
+        </sluice_tab>
+    </tabs>
+    
+    <sections>
+        <sluice_section module="sluice_connect" translate="label">
+            <label>Settings</label>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>sluice_tab</tab>
+            <groups>
+                <sluice_group translate="label">
+                    <label>Token Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <sluice_field translate="label">
+                            <label>Token:</label>
+                            <comment>Token from sluice</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </sluice_field>
+                    </fields>
+                </sluice_group>
+            </groups>
+        </sluice_section>
+    </sections>
+    
+    
+</config>

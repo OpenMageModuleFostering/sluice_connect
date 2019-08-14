@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+    <name>sluice_connect</name>
+    <version>0.1.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.gnu.org/licenses/gpl.html">GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Integration tool for SluiceHQ</summary>
+    <description>This extension helps connect your Magento Store to SluiceHQ service. </description>
+    <notes>- Track add to cart event (via google analitics)&#xD;
+- Give Magento data access to Sluice HQ (via Web Services)</notes>
+    <authors><author><name>Konstantin</name><user>flyb1z0n</user><email>flyb1z0n@gmail.com</email></author></authors>
+    <date>2013-05-06</date>
+    <time>10:50:12</time>
+    <contents><target name="magelocal"><dir name="Sluice"><dir name="Connect"><dir name="Helper"><file name="Data.php" hash="72f7af6ab8f4dd94d7e0d56f2355e84a"/></dir><dir name="Model"><file name="Observer.php" hash="9bcc39b07c303b0bf3b62e67a411356e"/></dir><dir name="etc"><file name="config.xml" hash="a0d266785b3068b867d5110c7df8b397"/><file name="system.xml" hash="7c00c55ed5ec73bc35df97d4781ca4bd"/></dir><dir name="lib"><dir name="GoogleAnalytics"><file name="Campaign.php" hash="a56c9b002352e6fa2232adae0621931e"/><file name="Config.php" hash="5229e50ead3b5e28bd766db1c9a612d1"/><file name="CustomVariable.php" hash="179416f069ce3e75ddabffc6b7fe057c"/><file name="Event.php" hash="636e6f4bcca8399bfda862aceda45c8a"/><file name="Exception.php" hash="50417068da38cefd83e3d92119a20dbc"/><dir name="Internals"><file name="ParameterHolder.php" hash="4ab0b166482aae049fc56f574c6a64dd"/><dir name="Request"><file name="EventRequest.php" hash="8cb97231147c6c63f0c7aab693fae7fe"/><file name="HttpRequest.php" hash="9c0510decfa0c14aa5df014913ba8aae"/><file name="ItemRequest.php" hash="a44f5de031847018c9789274c253478b"/><file name="PageviewRequest.php" hash="d73996f2f96f9174c166edda36141157"/><file name="Request.php" hash="73fedf67146a6395b02f4f56a06df8b9"/><file name="SocialInteractionRequest.php" hash="0f67db29fd409fcf6fb5fbb5693f3d6a"/><file name="TransactionRequest.php" hash="1a3439aa5d914d2c6307722fd1e2bfe2"/></dir><file name="Util.php" hash="25e6f65af8552688b1324a0876cad8bb"/><file name="X10.php" hash="0e8b98f4bec17fd09cb5ff2fce8a06e8"/></dir><file name="Item.php" hash="152bb655f2dd8b891bc8e4f0e0df2d4f"/><file name="Page.php" hash="74e153d1142aec38c1e610367855d545"/><file name="Session.php" hash="4ea6c25a797857fd7160926cc596551a"/><file name="SocialInteraction.php" hash="bf9ac557daf775fe0b8e7885af3506b3"/><file name="Tracker.php" hash="23b282b473b56e8e9dc232b1042fe467"/><file name="Transaction.php" hash="9b13d60b9fd50c858ef2757d114aaa93"/><file name="Visitor.php" hash="0db07b945ac96bc0abe88cfb52ae8e34"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Sluice_Connect.xml" hash="87aa6be6cfdc5eea59f2033098c8fe78"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php><package><name>Mage_Core_Modules</name><channel>community</channel><min>1.6.0.0</min><max>1.7</max></package></required></dependencies>
+</package>
