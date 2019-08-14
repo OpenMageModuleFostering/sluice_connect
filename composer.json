@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "GPL",
     "homepage": "",
-    "description": "This extension helps connect your Magento Store to SluiceHQ service.",
+    "description": "Sluice Connect extension.",
     "authors": [
     {
-        "name": "Shavrukov Konstantin",
-        "email": "flyb1z0n@gmail.com"
+        "name": "SluiceHq",
+        "email": "sluicehq@gmail.com"
     }
 ],
     "suggest": {

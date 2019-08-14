@@ -58,4 +58,3 @@ class Sluice_Connect_Model_Api extends Mage_Catalog_Model_Product_Api {
         return $result;
     }
 }
-?>

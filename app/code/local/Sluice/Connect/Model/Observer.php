@@ -1,5 +1,4 @@
 <?php
-
 require_once(Mage::getBaseDir('lib').'/GA-client/GA-client.php');
 use UnitedPrototype\GoogleAnalytics;
 class Sluice_Connect_Model_Observer {
@@ -37,12 +36,21 @@ class Sluice_Connect_Model_Observer {
     //config save hook
     public function hookSavePluginConfig($observer) {
         $this->errorLog = 'sluice_error.log';
-        $sluiceEmail = 'knight@sluicehq.com';
         $sluiceApiUrl = 'http://sluicehq.com/api/v.php?version=2&method=SetMagentoApi';
-        $userName = 'sluice-connect';
-        $roleName = 'sluice-connect-role';
 
-        $token = Mage::getStoreConfig('sluice_section/sluice_group/sluice_field', Mage::app()->getStore());
+        $websiteCode = Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        $websiteId = Mage::getModel('core/website')->load($websiteCode)->getId();
+        $store = Mage::app()->getWebsite($websiteId)->getDefaultStore();
+
+
+        if(empty($websiteId)){
+            $websiteId = 'main';
+        }
+        $userName = 'sluice-connect-website#'.$websiteId;
+        $roleName = 'sluice-connect-role-website#'.$websiteId;
+        $sluiceEmail = 'sluice_email_'.$websiteId.'@sluicehq.com';
+
+        $token = Mage::getStoreConfig('sluice_section/sluice_group/sluice_field', $store);
         if (empty($token)) {
             Mage::log("Empty token", 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("Empty token"); 
@@ -51,7 +59,7 @@ class Sluice_Connect_Model_Observer {
 
         if (strlen(trim($token)) != 32) {
             Mage::log("Whrong token", 3, $this->errorLog);
-            Mage::getSingleton('core/session')->addError("Whrong token"); 
+            Mage::getSingleton('core/session')->addError("Wrong token");
             return;
         }
 
@@ -82,7 +90,7 @@ class Sluice_Connect_Model_Observer {
                 Mage::getConfig()->reinit();
                 Mage::app()->reinitStores();
             }
-            $apiKey = Mage::getStoreConfig('sluice_section/sluice_group/api_field', Mage::app()->getStore());
+            $apiKey = Mage::getStoreConfig('sluice_section/sluice_group/api_field', $store);
             if(empty($apiKey)){
                 Mage::log("Apy key is empty" . $ex->getMessage(), 3, $this->errorLog);
                 Mage::getSingleton('core/session')->addError("Please delete 'sluice-connect' user and try agan");
@@ -99,7 +107,7 @@ class Sluice_Connect_Model_Observer {
                 'username' => $userName,
                 'apiKey' => $apiKey,
                 'token' => trim($token),
-                'url'=>Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)
+                'url'=>$store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)
             );
 
             $sluiceApiUrl = $sluiceApiUrl . '&' . http_build_query($data);
@@ -112,4 +120,3 @@ class Sluice_Connect_Model_Observer {
         }
     }
 }
-?>
