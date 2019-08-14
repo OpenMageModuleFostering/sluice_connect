@@ -1,30 +1,42 @@
 <?php
 
+require_once(Mage::getBaseDir('lib').'/GA-client/GA-client.php');
 use UnitedPrototype\GoogleAnalytics;
-
 class Sluice_Connect_Model_Observer {
 
+    public $errorLog = 'sluice_connect.log';
     // Add to cartd trecking
     public function hookToAddToCart($observer) {
+
         if (!Mage::helper('googleanalytics')->isGoogleAnalyticsAvailable()) {
-            Mage::log("Google analytics doesn't install", 3, $errorLog);
+            Mage::log("Google analytics doesn't install", 3, $this->errorLog);
             return;
         }
         $accountId = Mage::getStoreConfig(Mage_GoogleAnalytics_Helper_Data::XML_PATH_ACCOUNT);
         $baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
         if (empty($baseUrl)) {
-            Mage::log("Base url is empty", 3, $errorLog);
+            Mage::log("Base url is empty", 3, $this->errorLog);
             return;
         }
 
-        $tracker = new GoogleAnalytics\Tracker($accountId, $baseUrl);
-        $event = new GoogleAnalytics\Event("Cart", "Add", "Product");
-        $tracker->trackEvent($event, null, null);
+        try{
+            $tracker = new GoogleAnalytics\Tracker($accountId, $baseUrl);
+            $event = new GoogleAnalytics\Event("Cart", "Add", "Product");
+            $visitor = new GoogleAnalytics\Visitor();
+            $visitor->setIpAddress($_SERVER['REMOTE_ADDR']);
+            $visitor->setUserAgent($_SERVER['HTTP_USER_AGENT']);
+            $visitor->setScreenResolution('1024x768');
+            $session = new GoogleAnalytics\Session();
+            $tracker->trackEvent($event, $session, $visitor);
+        } catch (Exception $e) {
+            Mage::log('Tracking sluice connect '.$e->getMessage(), 3, $this->errorLog);
+            return;
+        }
     }
 
     //config save hook
     public function hookSavePluginConfig($observer) {
-        $errorLog = 'sluice_error.log';
+        $this->errorLog = 'sluice_error.log';
         $sluiceEmail = 'knight@sluicehq.com';
         $sluiceApiUrl = 'http://sluicehq.com/api/v.php?version=2&method=SetMagentoApi';
         $userName = 'sluice-connect';
@@ -32,13 +44,13 @@ class Sluice_Connect_Model_Observer {
 
         $token = Mage::getStoreConfig('sluice_section/sluice_group/sluice_field', Mage::app()->getStore());
         if (empty($token)) {
-            Mage::log("Empty token", 3, $errorLog);
+            Mage::log("Empty token", 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("Empty token"); 
             return;
         }
 
         if (strlen(trim($token)) != 32) {
-            Mage::log("Whrong token", 3, $errorLog);
+            Mage::log("Whrong token", 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("Whrong token"); 
             return;
         }
@@ -69,7 +81,7 @@ class Sluice_Connect_Model_Observer {
             }
             $apiKey = $user->getApiKey();
         } catch (Exception $ex) {
-            Mage::log("User/Role saving error" . $ex->getMessage(), 3, $errorLog);
+            Mage::log("User/Role saving error" . $ex->getMessage(), 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("User/Role saving error");
             return;
         }
@@ -82,7 +94,7 @@ class Sluice_Connect_Model_Observer {
             $sluiceApiUrl = $sluiceApiUrl . '&' . http_build_query($data);
             file_get_contents($sluiceApiUrl);
         } catch (Exception $ex) {
-            Mage::log("Error is request to sluice " . $ex->getMessage(), 3, $errorLog);
+            Mage::log("Error is request to sluice " . $ex->getMessage(), 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("Error is request to sluice " . $ex->getMessage());
             return;
         }
