@@ -5,7 +5,7 @@ use UnitedPrototype\GoogleAnalytics;
 class Sluice_Connect_Model_Observer {
 
     public $errorLog = 'sluice_connect.log';
-    // Add to cartd trecking
+    // Add to cart trecking
     public function hookToAddToCart($observer) {
 
         if (!Mage::helper('googleanalytics')->isGoogleAnalyticsAvailable()) {
@@ -61,7 +61,7 @@ class Sluice_Connect_Model_Observer {
                 $role = Mage::getModel("api/roles")->setName($roleName)->setRoleType('G')->save();
                 Mage::getModel("api/rules")->setRoleId($role->getId())->setResources(array("all"))->saveRel();
 
-                $apiKey = md5(uniqid(rand(), true));
+                $apiKey = md5(time());
                 $user = Mage::getModel('api/user');
                 $user->setData(array(
                     'username' => $userName,
@@ -78,8 +78,16 @@ class Sluice_Connect_Model_Observer {
                 ));
                 $user->save()->load($user->getId());
                 $user->setRoleIds(array($role->getId()))->setRoleUserId($user->getUserId())->saveRelations();
+                Mage::getModel('core/config')->saveConfig('sluice_section/sluice_group/api_field', $apiKey );
+                Mage::getConfig()->reinit();
+                Mage::app()->reinitStores();
             }
-            $apiKey = $user->getApiKey();
+            $apiKey = Mage::getStoreConfig('sluice_section/sluice_group/api_field', Mage::app()->getStore());
+            if(empty($apiKey)){
+                Mage::log("Apy key is empty" . $ex->getMessage(), 3, $this->errorLog);
+                Mage::getSingleton('core/session')->addError("Please delete 'sluice-connect' user and try agan");
+                return;
+            }
         } catch (Exception $ex) {
             Mage::log("User/Role saving error" . $ex->getMessage(), 3, $this->errorLog);
             Mage::getSingleton('core/session')->addError("User/Role saving error");
@@ -90,8 +98,12 @@ class Sluice_Connect_Model_Observer {
             $data = $arrayName = array(
                 'username' => $userName,
                 'apiKey' => $apiKey,
-                'token' => trim($token));
+                'token' => trim($token),
+                'url'=>Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)
+            );
+
             $sluiceApiUrl = $sluiceApiUrl . '&' . http_build_query($data);
+            Mage::log("Sended data: " . $sluiceApiUrl , 3, $this->errorLog);
             file_get_contents($sluiceApiUrl);
         } catch (Exception $ex) {
             Mage::log("Error is request to sluice " . $ex->getMessage(), 3, $this->errorLog);

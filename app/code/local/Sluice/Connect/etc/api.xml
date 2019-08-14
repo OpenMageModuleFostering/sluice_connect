@@ -1,0 +1,19 @@
+<config>
+    <api>
+        <resources>
+            <catalog_product translate="title" module="sluice_connect">
+                <model>sluice_connect/api</model>
+                <methods>
+                    <parent translate="title" module="sluice_connect">
+                        <title>Return parent</title>
+                        <method>parent</method>
+                    </parent>
+                    <childs translate="title" module="sluice_connect">
+                        <title>Product parent</title>
+                        <method>childs</method>
+                    </childs>
+                </methods>
+            </catalog_product>
+        </resources>
+    </api>
+</config>

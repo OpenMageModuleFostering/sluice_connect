@@ -3,10 +3,10 @@
     "type": "magento-module",
     "license": "GPL",
     "homepage": "",
-    "description": "Integration tool for SluiceHQ",
+    "description": "This extension helps connect your Magento Store to SluiceHQ service.",
     "authors": [
     {
-        "name": "Konstantin",
+        "name": "Shavrukov Konstantin",
         "email": "flyb1z0n@gmail.com"
     }
 ],

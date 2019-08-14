@@ -1,19 +1,18 @@
 <?xml version="1.0"?>
 <package>
     <name>sluice_connect</name>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <stability>stable</stability>
-    <license uri="http://www.gnu.org/licenses/gpl.html">GPL</license>
+    <license>GPL</license>
     <channel>community</channel>
     <extends/>
-    <summary>Integration tool for SluiceHQ</summary>
+    <summary>This extension helps connect your Magento Store to SluiceHQ service.</summary>
     <description>This extension helps connect your Magento Store to SluiceHQ service.</description>
-    <notes>- Track add to cart event (via google analitics)&#xD;
-- Give Magento data access to Sluice HQ (via Web Services)</notes>
-    <authors><author><name>Konstantin</name><user>flyb1z0n</user><email>flyb1z0n@gmail.com</email></author></authors>
-    <date>2013-05-11</date>
-    <time>17:04:50</time>
-    <contents><target name="magelocal"><dir name="Sluice"><dir name="Connect"><dir name="Helper"><file name="Data.php" hash="72f7af6ab8f4dd94d7e0d56f2355e84a"/></dir><dir name="Model"><file name="Observer.php" hash="330268fd45446d9d8af7cdb60ce12769"/></dir><dir name="etc"><file name="config.xml" hash="a0d266785b3068b867d5110c7df8b397"/><file name="system.xml" hash="7c00c55ed5ec73bc35df97d4781ca4bd"/></dir></dir></dir></target><target name="magelib"><dir><dir name="GA-client"><file name="GA-client.php" hash="9d36d0998d30e475d0417b790a244261"/></dir></dir></target><target name="mageetc"><dir><dir name="modules"><file name="Sluice_Connect.xml" hash="87aa6be6cfdc5eea59f2033098c8fe78"/></dir></dir></target></contents>
+    <notes>Extend standart Magento WebApi for SluiceHQ.</notes>
+    <authors><author><name>Shavrukov Konstantin</name><user>flyb1z0n</user><email>flyb1z0n@gmail.com</email></author></authors>
+    <date>2013-07-29</date>
+    <time>11:41:32</time>
+    <contents><target name="magelocal"><dir name="Sluice"><dir name="Connect"><dir name="Helper"><file name="Data.php" hash="72f7af6ab8f4dd94d7e0d56f2355e84a"/></dir><dir name="Model"><file name="Api.php" hash="9eec889ce6efe0e6574abe78d3b2e248"/><file name="Observer.php" hash="b96ce48bbe1df2b619cbfadc94053948"/></dir><dir name="etc"><file name="api.xml" hash="55bb4b5b4b09ae98c08095333b7ea584"/><file name="config.xml" hash="a0d266785b3068b867d5110c7df8b397"/><file name="system.xml" hash="a469061bfca6ddaf7d0625f713b3a160"/></dir></dir></dir></target><target name="magelib"><dir name="GA-client"><file name="GA-client.php" hash="9d36d0998d30e475d0417b790a244261"/></dir></target><target name="mageetc"><dir name="modules"><file name="Sluice_Connect.xml" hash="48740fb7c99b29de0af86399e578c5b9"/></dir></target></contents>
     <compatible/>
-    <dependencies><required><php><min>5.3.0</min><max>6.0.0</max></php></required></dependencies>
+    <dependencies><required><php><min>5.3.0</min><max>6.0.0</max></php><package><name>Mage_Core_Modules</name><channel>community</channel><min>1.6.0.0</min><max>1.8</max></package></required></dependencies>
 </package>
