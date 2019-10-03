@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/sluice_connect",
+    "name": "OpenMageModuleFostering\/sluice_connect",
     "type": "magento-module",
     "license": "GPL",
     "homepage": "",
     "description": "Sluice Connect extension.",
     "authors": [
-    {
-        "name": "SluiceHq",
-        "email": "sluicehq@gmail.com"
-    }
-],
+        {
+            "name": "SluiceHq",
+            "email": "sluicehq@gmail.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
